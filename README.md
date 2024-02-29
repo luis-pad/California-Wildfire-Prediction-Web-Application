@@ -43,12 +43,3 @@ Meet the team members who have contributed to this project:
 - [Matthew Bellman]()
 - [Edwin Rivera]()
 
-## Installation
-
-To set up the project on your local machine, follow these steps:
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/faridko26/California-Wildfire-Prediction.git
-
