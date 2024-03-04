@@ -140,7 +140,7 @@ p {
   user-select: none;
   touch-action: manipulation;
   vertical-align: baseline;
-  width: 160px;
+  width: auto;
 }
 
 .second {
