@@ -192,3 +192,11 @@ li a:hover {
   cursor: pointer;
   color: #fa6400;
 }
+
+.LL {
+    display: none;
+}
+
+.county_select {
+    display: none;
+}

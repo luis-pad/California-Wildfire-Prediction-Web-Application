@@ -1,440 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Home</title>
+    <title>Data Soruces</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/data_sources.css')}}" />
     <!-- <script src="{{url_for('static', filename='script.js')}}"></script> -->
-  </head>
-  <body>
-    <!-- <header>
-    <nav>
-      <div class="logo">
-        <a href="{{url_for('home')}}" class="logo-img-link">
-          <img src="{{url_for('static', filename='CSUN-senior-design-project 1.png')}}" alt="Logo" />
-        </a>
-      </div>
-      <div class="csunlogo">
-        <a href="{{url_for('home')}}" >
-          <img src="{{url_for('static', filename='csunlogo.png')}}" alt="Logo"/>
-        </a>
-      </div> 
-      <div class="logo-mobile">
-        <a href="{{url_for('home')}}" class="logo-img-mlink">
-          <img src="{{url_for('static', filename='logo 1.png')}}" alt="Logo" />
-        </a>
-      </div>
-      <button class="hamburger-menu">☰</button>
-      <ul class="nav-links">
-        <li><a href="{{url_for('home')}}">Home</a></li>
-        <li><a href="{{url_for('data')}}">Data Sources</a></li>
-        <li><a href="{{url_for('models')}}">Prediction Models</a></li>
-        <li><a href="{{url_for('about')}}">About Us</a></li>
-      </ul>
-    </nav>
-  </header>
-    <main>
-  
-
-      <h1>Data Sets</h1>
-
-
-
-      <form>
-	{% with messages = get_flashed_messages() %}
-          {% if messages %}
-            {% for message in messages %}
-              <p><b> {{ message }} </b></p><br />
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-        <label for="start_date">Start Date:</label>
-        <input type="date", id="start_date", name="start_date" required><br />
-        <label for="end_date">End Date (Optional):</label>
-        <input type="date", id="end_date", name="end_date"><br /><br />
-	<label for="county">County (Ctrl+Click to select multiple countys):</label>
-	<select id="county" name="county" size="10" multiple required>
-          <option value="1">Alameda</option>
-          <option value="3">Alpine</option>
-          <option value="5">Amador</option>
-          <option value="7">Butte</option>
-          <option value="9">Calaveras</option>
-          <option value="11">Colusa</option>
-          <option value="13">Contra Costa</option>
-          <option value="15">Del Norte</option>
-          <option value="17">El Dorado</option>
-          <option value="19">Fersno</option>
-          <option value="21">Glenn</option>
-          <option value="23">Humboldt</option>
-          <option value="25">Imperial</option>
-          <option value="27">Inyo</option>
-          <option value="29">Kern</option>
-          <option value="31">Kings</option>
-          <option value="33">Lake</option>
-          <option value="35">Lassen</option>
-          <option value="37">Los Angeles</option>
-          <option value="39">Madera</option>
-          <option value="41">Marin</option>
-          <option value="43">Mariposa</option>
-          <option value="45">Mendocino</option>
-          <option value="47">Merced</option>
-          <option value="49">Modoc</option>
-          <option value="51">Mono</option>
-          <option value="53">Monterey</option>
-          <option value="55">Napa</option>
-          <option value="57">Nevada</option>
-          <option value="59">Orange</option>
-          <option value="61">Placer</option>
-          <option value="63">Plumas</option>
-          <option value="65">Riverside</option>
-          <option value="67">Sacramento</option>
-          <option value="69">San Benito</option>
-          <option value="71">San Bernardino</option>
-          <option value="73">San Diego</option>
-          <option value="75">San Francisco</option>
-          <option value="77">San Joaquin</option>
-          <option value="79">San Luis Obispo</option>
-          <option value="81">San Mateo</option>
-          <option value="83">Santa Barbara</option>
-          <option value="85">Santa Clara</option>
-          <option value="87">Santa Cruz</option>
-          <option value="89">Shasta</option>
-          <option value="91">Sierra</option>
-          <option value="93">Siskiyou</option>
-          <option value="95">Solano</option>
-          <option value="97">Sonama</option>
-          <option value="99">Stanislaus</option>
-          <option value="101">Sutter</option>
-          <option value="103">Tehama</option>
-          <option value="105">Trinity</option>
-          <option value="107">Tulare</option>
-          <option value="109">Tuolume</option>
-          <option value="111">Ventura</option>
-          <option value="113">Yolo</option>
-          <option value="115">Yuba</option>
-        </select><br /><br />
-        <input type="submit" value="Download Dataset">
-      </form><br /><br />
-
-      <h1>Satellite Data</h1>
-        <div id="intro">
-          <b>Historical Analysis:</b><br />
-By analyzing satellite data archives, our system can identify patterns and trends related to past wildfires. Understanding factors like initiation points, spread trajectories, and affected terrains can refine prediction models, making them more precise.
-        </div>
-        <div id="intro">
-          <b>Vegetation Health Assessment:</b><br />
-Satellites can provide data on vegetation health through indices like the Normalized Difference Vegetation Index (NDVI). Areas with dry or dead vegetation are more susceptible to wildfires. By continuously monitoring vegetation health, we can highlight high-risk areas.
-        </div>
-        <div id="intro">
-          <b>Topographical Insights:</b><br />
-Detailed satellite imagery allows our system to factor in terrain and topography, both of which influence wildfire spread. For instance, valleys and slopes can channel or accelerate fires in specific directions.
-      </div>
-      <h1>Weather Data</h1>
-      <div id="intro">Weather plays an indispensable role in the initiation, spread, and behavior of wildfires. By integrating real-time and historical weather data into our wildfire predictor machine learning system, we can achieve more nuanced and accurate predictions. Here's how we harness the power of weather data:
-      </div>
-      <div id = "intro">
-        <b>Temperature Monitoring:</b><br />
-Elevated temperatures can exacerbate drought conditions and dry out vegetation, making areas more prone to wildfires. Monitoring temperature trends allows us to anticipate periods of heightened wildfire risk.
-      </div>
-      <div id = "intro">
-        <b>Humidity Insights:</b><br />
-Low humidity levels reduce the moisture content in vegetation and soil, creating tinderbox conditions. Continuous humidity tracking aids in pinpointing areas where fires are more likely to ignite and spread rapidly.
-      </div>
-      <div id = "intro">
-        <b>Wind Patterns:</b><br />
-Wind direction and speed are critical factors influencing the spread of wildfires. By analyzing wind data, our system can predict the potential path and velocity of fire expansion, allowing for early warnings and more effective containment strategies.
-      </div><br /><br />
-
-    </main> -->
-
-    <!-- <footer>
-      <div class="footer-container">
-        <div class="footer-content">© 2023 Wildfire Prediction</div>
-        
-      </div>
-    </footer> -->
-
+</head>
+<body>
     <div class="nav" id="navbar">
-      <div class="logo"><img src="{{url_for('static', filename='fire_logo.jpg')}}" alt="" /></div>
-      <ul class="nav-list">
-        <li><a href="{{url_for('home')}}">Home</a></li>
-        <li><a href="{{url_for('data_sources')}}">Data Sources</a></li>
-        <li><a href="{{url_for('models')}}">Machine Learning</a></li>
-        <li><a href="{{url_for('home')}}">Forum</a></li>
-      </ul>
+        <div class="logo"><img src="{{url_for('static', filename='fire_logo.jpg')}}" alt="" /></div>
+        <ul class="nav-list">
+            <li><a href="{{url_for('home')}}">Home</a></li>
+            <li><a href="{{url_for('data_sources')}}">Data Sources</a></li>
+            <li><a href="{{url_for('models')}}">Machine Learning</a></li>
+            <li><a href="{{url_for('home')}}">Forum</a></li>
+        </ul>
     </div>
     <div class="progress-container">
-      <div class="progress-bar" id="myBar"></div>
-    </div>
-  </section>
-
-  <div class="sidebar">
-    <div class="sidebar-title">
-      <h2>CONTENT</h2>
+        <div class="progress-bar" id="myBar"></div>
     </div>
 
-    <div class="links-to">
-      <a href="#burn_area">Burn Area</a>
-      <a href="#elevation">Elevation</a>
-      <a href="#lst">Land Surface Temperature</a>
-      <a href="#ndvi">Vegitation Index</a>
-      <a href="#ta">Thermal Anomolies</a>
-    </div>
-    <div class="holder1"></div>
-  </div>
-  <div class="main">
-
-      <h1>Data Sets</h1>
-
-<!-- TODO: Customize the design of the elements to make it fit in better -->
-
-      <form>
-	{% with messages = get_flashed_messages() %}
-          {% if messages %}
-            {% for message in messages %}
-              <p><b> {{ message }} </b></p><br />
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-        <label for="start_date">Start Date:</label>
-        <input type="date", id="start_date", name="start_date" required><br />
-        <label for="end_date">End Date (Optional):</label>
-        <input type="date", id="end_date", name="end_date"><br /><br />
-
-        <label for="m_type">Data Gathering Method:</label>
-	<select id="m_type" name="m_type" required onchange="showDiv(value, this)">
-          <option value="" selected></option>
-          <option value="LL">Longitude and Latitude</option>
-          <option value="county_select">County</option>
-        </select>
-        <br /><br />
-
-        <div id="LL">
-	<label for="minLat">Min Latitude</label>
-        <input type="text" id="minLat" name="minLat">
-
-	<label for="maxLat">Max Latitude</label>
-        <input type="text" id="minLat" name="maxLat"> </br>
-
-	<label for="minLon">Min Longitude</label>
-        <input type="text" id="minLon" name="minLon">
-
-	<label for="maxLon">Min Longitude</label>
-        <input type="text" id="maxLon" name="maxLon"> <br /><br />
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <h2>CONTENT</h2>
         </div>
 
-        <div id="county_select">
-	<label for="county">County:</label>
-	<select id="county" name="county" size="10">
-          <option value="1">Alameda</option>
-          <option value="3">Alpine</option>
-          <option value="5">Amador</option>
-          <option value="7">Butte</option>
-          <option value="9">Calaveras</option>
-          <option value="11">Colusa</option>
-          <option value="13">Contra Costa</option>
-          <option value="15">Del Norte</option>
-          <option value="17">El Dorado</option>
-          <option value="19">Fersno</option>
-          <option value="21">Glenn</option>
-          <option value="23">Humboldt</option>
-          <option value="25">Imperial</option>
-          <option value="27">Inyo</option>
-          <option value="29">Kern</option>
-          <option value="31">Kings</option>
-          <option value="33">Lake</option>
-          <option value="35">Lassen</option>
-          <option value="37">Los Angeles</option>
-          <option value="39">Madera</option>
-          <option value="41">Marin</option>
-          <option value="43">Mariposa</option>
-          <option value="45">Mendocino</option>
-          <option value="47">Merced</option>
-          <option value="49">Modoc</option>
-          <option value="51">Mono</option>
-          <option value="53">Monterey</option>
-          <option value="55">Napa</option>
-          <option value="57">Nevada</option>
-          <option value="59">Orange</option>
-          <option value="61">Placer</option>
-          <option value="63">Plumas</option>
-          <option value="65">Riverside</option>
-          <option value="67">Sacramento</option>
-          <option value="69">San Benito</option>
-          <option value="71">San Bernardino</option>
-          <option value="73">San Diego</option>
-          <option value="75">San Francisco</option>
-          <option value="77">San Joaquin</option>
-          <option value="79">San Luis Obispo</option>
-          <option value="81">San Mateo</option>
-          <option value="83">Santa Barbara</option>
-          <option value="85">Santa Clara</option>
-          <option value="87">Santa Cruz</option>
-          <option value="89">Shasta</option>
-          <option value="91">Sierra</option>
-          <option value="93">Siskiyou</option>
-          <option value="95">Solano</option>
-          <option value="97">Sonama</option>
-          <option value="99">Stanislaus</option>
-          <option value="101">Sutter</option>
-          <option value="103">Tehama</option>
-          <option value="105">Trinity</option>
-          <option value="107">Tulare</option>
-          <option value="109">Tuolume</option>
-          <option value="111">Ventura</option>
-          <option value="113">Yolo</option>
-          <option value="115">Yuba</option>
-        </select><br /><br />
+        <div class="links-to">
+            <a href="#burn_area">Burn Area</a>
+            <a href="#elevation">Elevation</a>
+            <a href="#lst">Land Surface Temperature</a>
+            <a href="#ndvi">Vegitation Index</a>
+            <a href="#ta">Thermal Anomolies</a>
+        </div>
+        <div class="holder1"></div>
+    </div>
+    <div class="main">
+
+        <h1 class="title">Data Sets</h1>
+
+        <!-- TODO: Customize the design of the elements to make it fit in better -->
+        <!-- TO DECORATE: Lables, Text Fields -->
+
+        <form>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p><b> {{ message }} </b></p><br />
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <label for="start_date">Start Date:</label>
+            <input type="date" , id="start_date" , name="start_date" required><br />
+            <label for="end_date">End Date:</label>
+            <input type="date" , id="end_date" , name="end_date" required><br /><br />
+
+            <label for="m_type">Data Gathering Method:</label>
+            <select id="m_type" name="m_type" required onchange="showDiv(value)">
+                <option value="" selected></option>
+                <option value="LL">Longitude and Latitude</option>
+                <option value="county_select">County</option>
+            </select>
+            <br /><br />
+
+            <script>
+                function showDiv(element) {
+                    console.log(element);
+                    document.getElementById("LL").style.display = "none";
+                    document.getElementById("county_select").style.display = "none";
+
+                    if (element != "")
+                        document.getElementById(element).style.display = "block";
+                }
+            </script>
+
+            <div id="LL" class="LL">
+                <label for="minLat">Min Latitude</label>
+                <input type="text" id="minLat" name="minLat">
+
+                <label for="maxLat">Max Latitude</label>
+                <input type="text" id="minLat" name="maxLat"> <br />
+
+                <label for="minLon">Min Longitude</label>
+                <input type="text" id="minLon" name="minLon">
+
+                <label for="maxLon">Min Longitude</label>
+                <input type="text" id="maxLon" name="maxLon"> <br /><br />
+            </div>
+
+            <div id="county_select" class="county_select">
+                <label for="county">County:</label>
+                <select id="county" name="county" size="10">
+                    <option value="-1" selected>Whole State</option>
+                    <option value="1">Alameda</option>
+                    <option value="3">Alpine</option>
+                    <option value="5">Amador</option>
+                    <option value="7">Butte</option>
+                    <option value="9">Calaveras</option>
+                    <option value="11">Colusa</option>
+                    <option value="13">Contra Costa</option>
+                    <option value="15">Del Norte</option>
+                    <option value="17">El Dorado</option>
+                    <option value="19">Fersno</option>
+                    <option value="21">Glenn</option>
+                    <option value="23">Humboldt</option>
+                    <option value="25">Imperial</option>
+                    <option value="27">Inyo</option>
+                    <option value="29">Kern</option>
+                    <option value="31">Kings</option>
+                    <option value="33">Lake</option>
+                    <option value="35">Lassen</option>
+                    <option value="37">Los Angeles</option>
+                    <option value="39">Madera</option>
+                    <option value="41">Marin</option>
+                    <option value="43">Mariposa</option>
+                    <option value="45">Mendocino</option>
+                    <option value="47">Merced</option>
+                    <option value="49">Modoc</option>
+                    <option value="51">Mono</option>
+                    <option value="53">Monterey</option>
+                    <option value="55">Napa</option>
+                    <option value="57">Nevada</option>
+                    <option value="59">Orange</option>
+                    <option value="61">Placer</option>
+                    <option value="63">Plumas</option>
+                    <option value="65">Riverside</option>
+                    <option value="67">Sacramento</option>
+                    <option value="69">San Benito</option>
+                    <option value="71">San Bernardino</option>
+                    <option value="73">San Diego</option>
+                    <option value="75">San Francisco</option>
+                    <option value="77">San Joaquin</option>
+                    <option value="79">San Luis Obispo</option>
+                    <option value="81">San Mateo</option>
+                    <option value="83">Santa Barbara</option>
+                    <option value="85">Santa Clara</option>
+                    <option value="87">Santa Cruz</option>
+                    <option value="89">Shasta</option>
+                    <option value="91">Sierra</option>
+                    <option value="93">Siskiyou</option>
+                    <option value="95">Solano</option>
+                    <option value="97">Sonama</option>
+                    <option value="99">Stanislaus</option>
+                    <option value="101">Sutter</option>
+                    <option value="103">Tehama</option>
+                    <option value="105">Trinity</option>
+                    <option value="107">Tulare</option>
+                    <option value="109">Tuolume</option>
+                    <option value="111">Ventura</option>
+                    <option value="113">Yolo</option>
+                    <option value="115">Yuba</option>
+                </select><br /><br />
+            </div>
+
+            <div id="type">
+                <label for="type">Data Type (Drag or Control+Click for Multipile):</label>
+                <select id="type" name="type" size="6" multiple required>
+                    <option value="EVI">EVI (Enhanced Vegetation Index)</option>
+                    <option value="TA">TA (Themal Anomalies)</option>
+                    <option value="LST">LST (Land Surface Temperature)</option>
+                    <option value="Wind">Wind</option>
+                    <option value="Fire">Fire</option>
+                    <option value="Elevation">Elevation</option>
+                </select>
+            </div>
+
+            <input type="submit" class="button-5" value="Download Dataset">
+        </form><br /><br />
+
+        <h1 class="title">The Data</h1>
+        <img src="{{url_for('static', filename='data_source_image.jpg')}}" alt="Data Image" />
+
+        <br />
+        <p id="burn_area">
+            Data is crucial for machine learning as it serves as the foundation for
+            training and improving AI models. The quality and quantity of data
+            directly influence the accuracy and effectiveness of machine learning
+            algorithms. By analyzing diverse and extensive datasets, machines can
+            recognize patterns, make predictions, and learn from experience. Data
+            not only enables machines to generalize and make informed decisions but
+            also allows them to adapt and improve their performance over time.
+            Furthermore, data plays a critical role in validating and testing AI
+            systems, helping to ensure they are reliable, robust, and provide
+            optimal results. Therefore, data holds immense significance in the field
+            of machine learning, empowering machines to acquire knowledge, solve
+            complex problems, and assist in various domains.
+        </p>
+        <br />
+        <h2>Burn Area</h2>
+        <br />
+        <p id="elevation">
+            Burn area (BA) data refers to information about the extent and severity of
+            wildfires over a particular area. This data includes the size and
+            location of burned areas, as well as other relevant attributes such as
+            fire intensity and vegetation type. Machine learning techniques can
+            leverage burn area data to develop predictive models that can forecast
+            the potential extent and severity of fires. These models can help
+            researchers and fire authorities to make informed decisions about fire
+            prevention and mitigation strategies. By analyzing patterns and
+            historical data, machine learning algorithms can identify key factors
+            that contribute to fire behavior, such as weather patterns and
+            topography. This enables the development of accurate and timely
+            predictions, aiding in the allocation of resources and implementation of
+            effective firefighting strategies.
+        </p>
+        <div class="buttons">
+            <!--<button class="button-5" role="button">Download Here</button>-->
+            <button class="button-5" role="button">Learn More</button>
+        </div>
+        <br />
+        <h2>Elevation</h2>
+        <br />
+        <p id="lst">
+            Elevation data refers to the measurement of the vertical distance
+            between a specific point on the Earth's surface and a reference point,
+            often sea level. This data provides information about the varying
+            heights and slopes of the land. In terms of wildfire prediction,
+            elevation data plays a crucial role and it helps in understanding the
+            topography of an area, identifying ridges and valleys, and determining
+            the steepness of slopes. This knowledge is vital because fire behavior
+            is greatly influenced by terrain. Steep slopes, for example, can
+            accelerate the spread of wildfires, while valleys can trap heat,
+            intensifying their impact. By incorporating accurate elevation data into
+            fire prediction models, researchers and firefighters can better assess
+            the potential severity and direction of a wildfire, allowing for more
+            effective preparation and response strategies.
+        </p>
+
+        <div class="buttons">
+            <!--<button class="button-5" role="button">Download Here</button>-->
+            <button class="button-5" role="button">Learn More</button>
         </div>
 
-	<!-- TODO: Figure out what a "Grid Container" is -->
-        <input type="checkbox" id="d_type1" name="d_type1" value="EVI">
-        <label for="d_type1">EVI (Enhanced Vegetation Index)</label>
-        <input type="checkbox" id="d_type2" name="d_type2" value="TA">
-        <label for="d_type2">TA (Themal Anomalies)</label><br />
-        <input type="checkbox" id="d_type3" name="d_type3" value="LST">
-        <label for="d_type3">LST (Land Surface Temperature)</label>
-        <input type="checkbox" id="d_type4" name="d_type4" value="Wind">
-        <label for="d_type4">Wind</label><br />
-        <input type="checkbox" id="d_type5" name="d_type5" value="Fire">
-        <label for="d_type5">Fire</label>
-        <input type="checkbox" id="d_type6" name="d_type6" value="Elevation">
-        <label for="d_type6">Elevation</label><br />
+        <br />
+        <h2 class="land_surface">Land Surface Temperature</h2>
+        <p id="ndvi">
+            Land surface temperature (LST) data refers to the measurement of the
+            temperature of the Earth's surface obtained through satellite remote
+            sensing. It provides information about the amount of heat being radiated
+            or emitted by the land surface. LST data is crucial for wildfire
+            prediction due to its ability to identify areas of heightened fire risk.
+            High temperatures can indicate dry and combustible conditions,
+            increasing the likelihood of wildfires. By monitoring and analyzing LST
+            data, researchers and fire firefighting agencies can track changes in land
+            surface temperatures, identify hotspots, and predict areas that are
+            prone to wildfires. This information aids in the prevention of wildfires and provides
+            any potential warning to become effectivley prepared.
+        </p>
+        <div class="buttons">
+            <!--<button class="button-5" role="button">Download Here</button>-->
+            <button class="button-5" role="button">Learn More</button>
+        </div>
 
-        <input type="submit" value="Download Dataset">
-      </form><br /><br />
+        <br />
+        <h2 class="vegetation_index">Normalized Difference Vegetation Index</h2>
+        <p id="ta">
+            Normalized Difference Vegetation Index (NDVI) data is a remote sensing
+            technique commonly used to assess the health of vegetation.
+            NDVI measures the greenness from the Earth's surface,
+            indicating the density of vegetation. This data becomes
+            crucial for wildfire prediction as it provides valuable insights into
+            the condition and moisture content of vegetation. By monitoring changes
+            in NDVI over time, researchers can track and detect anomalies or areas of
+            increased vegetation stress, which can serve as potential fuel sources
+            for wildfires. Such monitoring allows for the identification of areas
+            prone to fire outbreaks, enabling authorities and forest management
+            agencies to take proactive measures in mitigating and preventing
+            wildfires from spreading rapidly and becoming uncontrollable.
+            Ultimately, NDVI data plays a significant role in enhancing
+            wildfire prediction and aiding in the protection of life.
+        </p>
+        <div class="buttons">
+            <!--<button class="button-5" role="button">Download Here</button>-->
+            <button class="button-5" role="button">Learn More</button>
+        </div>
 
-    <h1 class="title">The Data</h1>
-    <img src="{{url_for('static', filename='data_source_image.jpg')}}" alt="Data Image" />
-
-    <br />
-    <p id="burn_area">
-      Data is crucial for machine learning as it serves as the foundation for
-      training and improving AI models. The quality and quantity of data
-      directly influence the accuracy and effectiveness of machine learning
-      algorithms. By analyzing diverse and extensive datasets, machines can
-      recognize patterns, make predictions, and learn from experience. Data
-      not only enables machines to generalize and make informed decisions but
-      also allows them to adapt and improve their performance over time.
-      Furthermore, data plays a critical role in validating and testing AI
-      systems, helping to ensure they are reliable, robust, and provide
-      optimal results. Therefore, data holds immense significance in the field
-      of machine learning, empowering machines to acquire knowledge, solve
-      complex problems, and assist in various domains.
-    </p>
-    <br />
-    <h2>Burn Area</h2>
-    <br />
-    <p id="elevation">
-      Burn area (BA) data refers to information about the extent and severity of
-      wildfires over a particular area. This data includes the size and
-      location of burned areas, as well as other relevant attributes such as
-      fire intensity and vegetation type. Machine learning techniques can
-      leverage burn area data to develop predictive models that can forecast
-      the potential extent and severity of fires. These models can help
-      researchers and fire authorities to make informed decisions about fire
-      prevention and mitigation strategies. By analyzing patterns and
-      historical data, machine learning algorithms can identify key factors
-      that contribute to fire behavior, such as weather patterns and
-      topography. This enables the development of accurate and timely
-      predictions, aiding in the allocation of resources and implementation of
-      effective firefighting strategies.
-    </p>
-    <div class="buttons">
-      <!--<button class="button-5" role="button">Download Here</button>-->
-      <button class="button-5 second" role="button">Learn More</button>
-    </div>
-    <br />
-    <h2>Elevation</h2>
-    <br />
-    <p id="lst">
-      Elevation data refers to the measurement of the vertical distance
-      between a specific point on the Earth's surface and a reference point,
-      often sea level. This data provides information about the varying
-      heights and slopes of the land. In terms of wildfire prediction,
-      elevation data plays a crucial role and it helps in understanding the
-      topography of an area, identifying ridges and valleys, and determining
-      the steepness of slopes. This knowledge is vital because fire behavior
-      is greatly influenced by terrain. Steep slopes, for example, can
-      accelerate the spread of wildfires, while valleys can trap heat,
-      intensifying their impact. By incorporating accurate elevation data into
-      fire prediction models, researchers and firefighters can better assess
-      the potential severity and direction of a wildfire, allowing for more
-      effective preparation and response strategies.
-    </p>
-
-    <div class="buttons">
-      <!--<button class="button-5" role="button">Download Here</button>-->
-      <button class="button-5 second" role="button">Learn More</button>
+        <br />
+        <h2 class="thermal_anomaly">Thermal Anomalies</h2>
+        <p>
+            Thermal anomaly (TA) data refers to the detection and measurement of
+            abnormal amounts of heat in specific areas on the Earth's surface. It is
+            an essential component in wildfire prediction and monitoring systems. By
+            analyzing infrared satellite imagery, researchers are able to identify
+            these thermal anomalies, which indicate areas of intense heat or active
+            fires. Thermal anomalies data also helps in predicting the
+            potential spread of a wildfire, as it provides information on the fire's
+            rate of growth and direction. Additionally, this data aids in assessing
+            the severity of a wildfire and its potential impacts on ecosystems,
+            communities, and air quality. Overall, thermal anomaly data plays a
+            vital role in improving early warning systems and enabling proactive
+            firefighting and evacuation efforts.
+        </p>
+        <div class="buttons">
+            <!--<button class="button-5" role="button">Download Here</button>-->
+            <button class="button-5" role="button">Learn More</button>
+        </div>
     </div>
 
-    <br />
-    <h2 class="land_surface">Land Surface Temperature</h2>
-    <p id="ndvi">
-      Land surface temperature (LST) data refers to the measurement of the
-      temperature of the Earth's surface obtained through satellite remote
-      sensing. It provides information about the amount of heat being radiated
-      or emitted by the land surface. LST data is crucial for wildfire
-      prediction due to its ability to identify areas of heightened fire risk.
-      High temperatures can indicate dry and combustible conditions,
-      increasing the likelihood of wildfires. By monitoring and analyzing LST
-      data, researchers and fire firefighting agencies can track changes in land
-      surface temperatures, identify hotspots, and predict areas that are
-      prone to wildfires. This information aids in the prevention of wildfires and provides 
-      any potential warning to become effectivley prepared.
-    </p>
-    <div class="buttons">
-      <!--<button class="button-5" role="button">Download Here</button>-->
-      <button class="button-5 second" role="button">Learn More</button>
-    </div>
-
-    <br />
-    <h2 class="vegetation_index">Normalized Difference Vegetation Index</h2>
-    <p id="ta">
-      Normalized Difference Vegetation Index (NDVI) data is a remote sensing
-      technique commonly used to assess the health of vegetation.
-      NDVI measures the greenness from the Earth's surface,
-      indicating the density of vegetation. This data becomes
-      crucial for wildfire prediction as it provides valuable insights into
-      the condition and moisture content of vegetation. By monitoring changes
-      in NDVI over time, researchers can track and detect anomalies or areas of
-      increased vegetation stress, which can serve as potential fuel sources
-      for wildfires. Such monitoring allows for the identification of areas
-      prone to fire outbreaks, enabling authorities and forest management
-      agencies to take proactive measures in mitigating and preventing
-      wildfires from spreading rapidly and becoming uncontrollable.
-      Ultimately, NDVI data plays a significant role in enhancing
-      wildfire prediction and aiding in the protection of life.
-    </p>
-    <div class="buttons">
-      <!--<button class="button-5" role="button">Download Here</button>-->
-      <button class="button-5 second" role="button">Learn More</button>
-    </div>
-
-    <br />
-    <h2 class="thermal_anomaly">Thermal Anomalies</h2>
-    <p>
-      Thermal anomaly (TA) data refers to the detection and measurement of
-      abnormal amounts of heat in specific areas on the Earth's surface. It is
-      an essential component in wildfire prediction and monitoring systems. By
-      analyzing infrared satellite imagery, researchers are able to identify
-      these thermal anomalies, which indicate areas of intense heat or active
-      fires. Thermal anomalies data also helps in predicting the
-      potential spread of a wildfire, as it provides information on the fire's
-      rate of growth and direction. Additionally, this data aids in assessing
-      the severity of a wildfire and its potential impacts on ecosystems,
-      communities, and air quality. Overall, thermal anomaly data plays a
-      vital role in improving early warning systems and enabling proactive
-      firefighting and evacuation efforts.
-    </p>
-    <div class="buttons">
-      <!--<button class="button-5" role="button">Download Here</button>-->
-      <button class="button-5 second" role="button">Learn More</button>
-    </div>
-  </div>
-
-  <script src="{{url_for('static', filename='scrollbar.js')}}"></script>
-  </body>
+    <script src="{{url_for('static', filename='scrollbar.js')}}"></script>
+</body>
 </html>
