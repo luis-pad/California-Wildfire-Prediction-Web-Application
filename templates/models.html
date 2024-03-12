@@ -1,51 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Home</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
-    <script src="{{url_for('static', filename='script.js')}}" defer></script>
-  </head>
-  <body>
-    <header>
-    <nav>
-      <div class="logo">
-        <a href="{{url_for('home')}}" class="logo-img-link">
-          <img src="{{url_for('static', filename='CSUN-senior-design-project 1.png')}}" alt="Logo" />
-        </a>
-      </div>
-      <div class="csunlogo">
-        <a href="{{url_for('home')}}" >
-          <img src="{{url_for('static', filename='csunlogo.png')}}" alt="Logo"/>
-        </a>
-      </div> 
-      <div class="logo-mobile">
-        <a href="{{url_for('home')}}" class="logo-img-mlink">
-          <img src="{{url_for('static', filename='logo 1.png')}}" alt="Logo" />
-        </a>
-      </div>
-      <button class="hamburger-menu">☰</button>
-      <ul class="nav-links">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Home</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+  <script src="{{url_for('static', filename='script.js')}}" defer></script>
+  <script src="{{url_for('static', filename='scrollbar.js')}}"></script>
+</head>
+
+<body>
+  <header>
+    <div class="nav" id="navbar">
+      <div class="logo"><img src="{{url_for('static', filename='fire_logo.jpg')}}" alt="" /></div>
+      <ul class="nav-list">
         <li><a href="{{url_for('home')}}">Home</a></li>
-        <li><a href="{{url_for('data')}}">Data Sources</a></li>
-        <li><a href="{{url_for('models')}}">Prediction Models</a></li>
-        <li><a href="{{url_for('about')}}">About Us</a></li>
+        <li><a href="{{url_for('data_sources')}}">Data Sources</a></li>
+        <li><a href="{{url_for('models')}}">Machine Learning</a></li>
+        <li><a href="{{url_for('home')}}">Forum</a></li>
       </ul>
-    </nav>
+    </div>
   </header>
-    <main>
-    </main>
-
-    <footer>
-      <div class="footer-container">
-        <div class="footer-content">© 2023 Wildfire Prediction</div>
-        
+  <main>
+    <div class="progress-container">
+      <div class="progress-bar" id="myBar"></div>
+    </div>
+    <div class="modelContainer">
+      <div class="table-contents">
+        <div class="links-to">
+          <h2>Contents</h2>
+          <a href="#machine_learning">Machine Learning </a>
+          <a href="#GNB">Gaussian Naive Bayes</a>
+          <a href="#KNN">K-Nearest Neighbors</a>
+          <a href="#MLP">Multi-Layer Perceptron</a>
+          <a href="#SVM">Support Vector Machine</a>
+          <a href="#LSTM">Long Short-Term Memory</a>
+          <a href="#visualization">2D Model Visualization</a>
+        </div>
       </div>
+      <div class="modelInfo">
+        <div id="machine_learning">
+          <h2>Machine Learning Importance</h2>
+          <p>
 
+            Machine learning models play a crucial role in wildfire prediction, particularly in regions prone to
+            frequent occurrences like California. Before training these models, we addressed the imbalance in the data,
+            crucial for accurate predictions. We utilized various sampling ratios, including 1:1, 2:1, 4:1, and 8:1, to
+            ensure balanced representation. Leveraging data from 2020, California's biggest wildfire year, provided a
+            comprehensive dataset for training. Each algorithm—Gaussian Naive Bayes (GNB), K-Nearest Neighbors (KNN),
+            Multi-Layer Perceptron (MLP), Support Vector Machine (SVM), and Long Short-Term Memory (LSTM)—then
+            contributed uniquely to predictive capabilities essential for wildfire management. GNB offered initial
+            insights through probabilistic classification, considering factors like weather conditions, vegetation, and
+            historical fire data. KNN analyzed spatial proximity for localized predictions, while MLP's deep learning
+            architecture extracted complex patterns. SVM's optimal hyperplanes delineated high-risk areas, aiding
+            resource allocation. LSTM excelled in capturing temporal dependencies, vital for modeling dynamic factors
+            like wind patterns and fire spread over time. Integrating these techniques empowered authorities with
+            advanced predictive capabilities, enabling proactive measures to mitigate wildfire risks and enhance public
+            safety.</p>
+        </div>
+        <div id="GNB">
+          <h2> Gaussian Naive Bayes</h2>
+          <p>
+            Gaussian Naive Bayes (GNB) is a probabilistic machine learning algorithm that can be effectively utilized
+            for
+            wildfire predictions by analyzing various environmental factors. GNB operates under the assumption of
+            feature
+            independence, meaning it assumes that each input variable (such as temperature, humidity, wind speed,
+            vegetation type) contributes independently to the probability of a certain outcome (wildfire occurrence or
+            non-occurrence). In the context of wildfire prediction, GNB leverages historical wildfire data alongside
+            environmental features to calculate the probability of a fire event given specific conditions. By estimating
+            the likelihood of these features belonging to each class (wildfire or non-wildfire), GNB computes the
+            posterior probability using Bayes' theorem, which involves combining prior knowledge (from historical data)
+            with new evidence (current environmental conditions). This enables GNB to provide probabilistic predictions
+            of
+            wildfire occurrence, offering valuable insights to aid in decision-making processes related to fire
+            management
+            and prevention strategies. While GNB's assumption of feature independence may not always hold true in
+            complex
+            environmental systems, its simplicity, efficiency, and ability to handle high-dimensional data make it a
+            valuable tool in wildfire prediction efforts.
+          </p>
+          <div class="additional-info">
+            <div class="column1">
+              <img src="{{url_for('static', filename='GNB.png')}}" alt="Gaussian" />
+            </div>
+            <div class="column2">
+              <h3>Figure 1. Gaussian Model Statistics</h3>
+              <p>
+              <ul>
+                <li>Running time: 56 min</li>
+                <li>Accuracy: %80</li>
+                <li>Precision Score Class 1: low (0)</li>
+              </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="KNN">
+          <h2> K-Nearest Neighbors</h2>
+          <p>
+            K-Nearest Neighbors (KNN) is a versatile machine learning algorithm that can be applied to wildfire
+            predictions by leveraging spatial similarities between geographic regions with similar environmental
+            characteristics. In the context of wildfire prediction, KNN works by considering historical wildfire
+            occurrences and the associated environmental features (such as temperature, humidity, wind direction,
+            vegetation type) of neighboring regions. By measuring the similarity between a target region and its k
+            nearest
+            neighbors in feature space, KNN predicts the likelihood of wildfire occurrence based on the majority class
+            among its neighbors. This approach enables KNN to capture localized patterns and spatial dependencies,
+            making
+            it particularly useful for predicting wildfire risk in geographically diverse regions like California. KNN's
+            ability to adapt to varying environmental conditions and its simplicity in implementation make it a valuable
+            tool for wildfire prediction, providing actionable insights for resource allocation, emergency response
+            planning, and land management strategies aimed at mitigating wildfire risks.
+          </p>
+          <div class="additional-info">
+            <div class="column1">
+              <img src="{{url_for('static', filename='KNN.png')}}" alt="KNN" />
+            </div>
+            <div class="column2">
+              <h3>Figure 2. KNN Model Statistics</h3>
+              <p>
+              <ul>
+                <li>Running time: 65 min</li>
+                <li>Accuracy: %96</li>
+                <li>Precision Score Class 1: low (0.01)</li>
+              </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="MLP">
+          <h2>Multi-Layer Perceptron</h2>
+          <p>
+            Multi-Layer Perceptron (MLP) is a powerful neural network architecture that can be effectively employed for
+            wildfire predictions by learning complex patterns and relationships from large-scale environmental data. In
+            the context of wildfire prediction, MLP works by processing input features (such as temperature, humidity,
+            wind speed, vegetation type) through multiple layers of interconnected neurons. These layers allow MLP to
+            extract hierarchical representations of the input data, enabling it to capture intricate nonlinear
+            relationships between environmental variables and wildfire occurrences. Through the process of training, MLP
+            adjusts its internal parameters (weights and biases) using optimization algorithms like backpropagation, to
+            minimize prediction errors and improve accuracy. MLP's deep learning capabilities enable it to handle
+            high-dimensional data and learn from diverse sources of information, including satellite imagery, weather
+            forecasts, and historical fire data. By leveraging the flexibility and expressiveness of MLP, wildfire
+            prediction models can achieve superior performance in capturing the complex dynamics of fire behavior,
+            aiding
+            in early detection, risk assessment, and mitigation strategies for wildfire management in California and
+            beyond.
+          </p>
+          <div class="additional-info">
+            <div class="column1">
+              <img src="{{url_for('static', filename='MLP.png')}}" alt="Multi-Layer Perceptron" />
+            </div>
+            <div class="column2">
+              <h3>Figure 3. MLP Model Statistics</h3>
+              <p>
+              <ul>
+                <li>MLP: 4 hidden layers, 16 modes per layer</li>
+                <li>Running time: 1h 22m</li>
+                <li>Accuracy: %89</li>
+                <li>Precision Score Class 1: low (0.01)</li>
+              </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="SVM">
+          <h2>Support Vector Machine</h2>
+          <p>Support Vector Machine (SVM) is a robust machine learning algorithm that holds promise for wildfire
+            predictions, particularly in regions like California where wildfires are prevalent. SVM operates by
+            identifying the optimal hyperplane that best separates different classes of data points, in this case,
+            regions
+            prone to wildfire and those less likely to experience such events. SVM achieves this by mapping the input
+            features (such as temperature, humidity, wind speed, vegetation type) to a high-dimensional space and
+            finding
+            the hyperplane that maximizes the margin between the classes, effectively delineating areas at higher risk
+            of
+            wildfires. By considering various environmental factors, SVM can discern complex patterns and infer
+            relationships between features and wildfire occurrences, facilitating accurate predictions. Additionally,
+            SVM's ability to handle non-linear relationships through kernel functions allows it to capture intricate
+            spatial and temporal dependencies in the data, further enhancing its predictive capabilities. SVM's
+            robustness, versatility, and ability to generalize well to unseen data make it a valuable tool for wildfire
+            prediction models, assisting authorities in proactive fire management and mitigation efforts in California
+            and
+            other wildfire-prone regions.
+          </p>
+          <div class="additional-info">
+            <div class="column1">
+              <img src="{{url_for('static', filename='SVM.png')}}" alt="Support Vector Machine" />
+            </div>
+            <div class="column2">
+              <h3>Figure 4. SVM Model</h3>
+              <p>
+              <ul>
+                <li>Running time: 17h 44m</li>
+                <li>Accuracy: %97</li>
+                <li>Precision Score Class 1: low (0.01)</li>
+              </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="LSTM">
+          <h2>Long Short-Term Memory</h2>
+          <p>
+            Long Short-Term Memory (LSTM) networks offer a potent approach for wildfire predictions, particularly in
+            regions like California characterized by complex environmental dynamics. LSTM, a type of recurrent neural
+            network (RNN), excels in capturing temporal dependencies and sequential patterns in data, making it
+            well-suited for modeling the evolving nature of wildfires over time. In the context of wildfire prediction,
+            LSTM networks analyze historical environmental data (such as temperature, humidity, wind patterns,
+            vegetation
+            density) collected over sequential time intervals. By processing this temporal data through layers of
+            specialized memory cells with gating mechanisms, LSTM can effectively learn and remember long-term
+            dependencies, including subtle changes in weather conditions and vegetation characteristics that may precede
+            wildfire events. The recurrent connections within LSTM allow it to retain information over extended time
+            horizons, enabling it to make accurate predictions about future fire occurrences based on past observations.
+            Additionally, LSTM's ability to handle irregular time intervals and missing data further enhances its
+            applicability to wildfire prediction tasks. By leveraging the advanced modeling capabilities of LSTM
+            networks,
+            wildfire prediction models can provide valuable insights for early detection, risk assessment, and resource
+            allocation, ultimately aiding in wildfire prevention and mitigation efforts in California and beyond.
+          </p>
+          <div class="additional-info">
+            <div class="column1">
+              <img src="{{url_for('static', filename='LSTM.png')}}" alt="LSTM" />
+            </div>
+            <div class="column2">
+              <h3>Figure 5. LSTM Model</h3>
+              <p>
+              <ul>
+                <li>LSTM: one LSTM layer and one dense output layer</li>
+                <li>Used undersample 8:1 balanced data</li>
+                <li>Running time: 11h 47m</li>
+                <li>Accuracy: %96</li>
+                <li>Precision Score Class 1: low (0.01)</li>
+              </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="visualization">
 
-      
-    </footer>
-  </body>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-content">© 2023 Wildfire Prediction</div>
+    </div>
+  </footer>
+</body>
+
 </html>

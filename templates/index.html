@@ -7,36 +7,25 @@
     <title>Home</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
     <script src="{{url_for('static', filename='script.js')}}" defer></script>
+  <script src="{{url_for('static', filename='scrollbar.js')}}"></script>
+
   </head>
   <body>
     <header>
-    <nav>
-      <div class="logo">
-        <a href="{{url_for('home')}}" class="logo-img-link">
-          <img src="{{url_for('static', filename='CSUN-senior-design-project 1.png')}}" alt="Logo" />
-        </a>
-      </div>
-      <div class="csunlogo">
-        <a href="{{url_for('home')}}" >
-          <img src="{{url_for('static', filename='csunlogo.png')}}" alt="Logo"/>
-        </a>
-      </div> 
-      <div class="logo-mobile">
-        <a href="{{url_for('home')}}" class="logo-img-mlink">
-          <img src="{{url_for('static', filename='logo 1.png')}}" alt="Logo" />
-        </a>
-      </div>
-
-      <button class="hamburger-menu">☰</button>
-      <ul class="nav-links">
-        <li><a href="{{url_for('home')}}">Home</a></li>
-        <li><a href="{{url_for('data_sources')}}">Data Sources</a></li>
-        <li><a href="{{url_for('models')}}">Prediction Models</a></li>
-        <li><a href="{{url_for('about')}}">About Us</a></li>
-      </ul>
-    </nav>
+      <div class="nav" id="navbar">
+        <div class="logo"><img src="{{url_for('static', filename='fire_logo.jpg')}}" alt="" /></div>
+        <ul class="nav-list">
+            <li><a href="{{url_for('home')}}">Home</a></li>
+            <li><a href="{{url_for('data_sources')}}">Data Sources</a></li>
+            <li><a href="{{url_for('models')}}">Machine Learning</a></li>
+            <li><a href="{{url_for('home')}}">Forum</a></li>
+        </ul>
+    </div>
   </header>
     <main>
+      <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
       <!-- Body content --> <br />
       <div class="wildfire-img">
         <img src="{{url_for('static', filename='wildfi.png')}}" alt="wildfire">
