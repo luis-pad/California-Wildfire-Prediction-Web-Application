@@ -77,6 +77,24 @@ def createFile(data):
     file_data = bytearray('\n'.join(data) , "utf-8")
     return send_file(BytesIO(file_data), download_name = "dataset.txt", as_attachment = True)
 
+def generateHeader(data_type):
+    header = ""
+
+    if "EVI" in data_type:
+        header += "Enhanced Vegetation Index | "
+    if "TA" in data_type:
+        header += "Themal Anomalies | "
+    if "LST" in data_type:
+        header += "Land Surface Temperature | "
+    if "Wind" in data_type:
+        header += "Wind | "
+    if "Fire" in data_type:
+        header += "Fire? | "
+    if "Elevation" in data_type:
+        header += "Elevation | "
+
+    return header[:-3]
+
 ## Finds and returns a value from file 'filePath' from day 'date' and county 'county' ##
 ## Returns an empty array if it can't find a value ##
 def findValue(start_date, end_date, county, filePath):
@@ -228,20 +246,21 @@ def data_sources():
         start_date, end_date = end_date, start_date
 
     #DEBUG <year-month-date>
-    print(start_date)
-    print(end_date)
-    print("\n")
+##    print(start_date)
+##    print(end_date)
+##    print("\n")
 
     temp = (str)(end_date - start_date)
-    print((int)(temp[:(temp.find(" "))]) <= 20)
-    print("\n")
+##    print((int)(temp[:(temp.find(" "))]) > 20)
+##    print("\n")
 
     # Date range checker (to prevent a large file from being generated)
     ## The limit is less then 3 weeks (less then 21 days) because if it is any higher,
     ## then the worst case senario is that a file could be over 0.5 GB in size, making
     ## it unopenable by the user, which is the whole point of the downloader. ##
-    if ((int)(temp[:(temp.find(" "))]) <= 20):
+    if ((int)(temp[:(temp.find(" "))]) > 20):
         flash("Date range is too large: must be less than 3 weeks (< 21 days)")
+        print("Date range = " + temp[:(temp.find(" "))])
         return redirect(url_for('data_sources'))
     
     if (method == "LL"):
@@ -261,13 +280,19 @@ def data_sources():
         min_Lon, max_Lon = max_Lon, min_Lon
 
     #DEBUG
-    print(min_Lat)
-    print(max_Lat)
-    print("\n")
-    print(min_Lon)
-    print(max_Lon)
+##    print(min_Lat)
+##    print(max_Lat)
+##    print("\n")
+##    print(min_Lon)
+##    print(max_Lon)
 
     ## END DATA VALIDATION, START FILE GENERATION ##
+
+    # Generate header
+    print(generateHeader(data_type))
+    # Generate date
+    # Find values in lat and log and get the data type the user requested
+    # Flaten the array at the end of the
 
     # PLACEHOLDER FOR FILE DOWNLOADER
     flash("WIP")
