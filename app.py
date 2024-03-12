@@ -232,7 +232,7 @@ def data_sources():
     print(end_date)
     print("\n")
 
-    date_temp = (str)(end_date - start_date)
+    temp = (str)(end_date - start_date)
     print((int)(temp[:(temp.find(" "))]) <= 20)
     print("\n")
 
