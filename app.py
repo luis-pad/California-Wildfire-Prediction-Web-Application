@@ -65,6 +65,13 @@ CountyList = ["","Alameda",
               "","Yuba"
               ]
 
+
+## PLACEHOLDERS (Check with the dataset to find the actual values)
+MIN_LON = "0"
+MIN_LAT = "0"
+MAX_LON = "200"
+MAX_LAT = "200"
+
 ## Generates the file to download ##
 def createFile(data):
     file_data = bytearray('\n'.join(data) , "utf-8")
@@ -114,7 +121,7 @@ def formatCounty(county):
     except:         # Out of range index
         return ""
         
-## Converts the date from mm/dd/yyyy to yyyy-mm-dd##
+## Converts the date from mm/dd/yyyy to yyyy-mm-dd ##
 def toISO(date):
     m, d, y = [str(x) for x in date.split('/')]
     return y + "-" + m + "-" + d
@@ -138,6 +145,8 @@ def home():
 def about():
     return render_template('about.html')
 
+## STILL NEED THIS FOR REFERENCE, WILL REMOVE WHEN FILE DOWNLOADER IS DONE.
+"""
 @app.route('/data')
 def data():
     sd = request.args.get('start_date', default = "", type = str)
@@ -182,7 +191,7 @@ def data():
     for i in value_NDVI: # DEBUG, OUTPUT
         print(i)
     
-    return createFile(value_NDVI)
+    return createFile(value_NDVI)"""
 
 @app.route('/models')
 def models():
@@ -190,7 +199,79 @@ def models():
 
 @app.route('/data_sources')
 def data_sources():
-    return render_template('data_sources.html')
+
+    # Gets parameters from the url from the form entry (if avalible)    
+    sd = request.args.get('start_date', default = "", type = str)
+    ed = request.args.get('end_date', default = "", type = str)
+    method = request.args.get('m_type', default = "", type = str)
+
+    # TODO: Replace the defaults with whatever the min and max values are from the dataset
+    min_Lat = request.args.get('minLat', default = "", type = str)
+    max_Lat = request.args.get('maxLat', default = "", type = str)
+    min_Lon = request.args.get('minLon', default = "", type = str)
+    max_Lon = request.args.get('maxLon', default = "", type = str)
+
+    county = request.args.get('county', default = -1, type = int)
+
+    data_type = request.args.getlist('type', type = str)
+
+    ## IF ANY OF THE REQUIRED FIELDS ARE THE DEFAULT VALUES, JUST LOAD THE PAGE ##
+    ## (Unless you clicked on the "Download Dataset" button, this should always be true) ##
+    if (sd == "" or ed == "" or method == "" or len(data_type) == 0):
+        return render_template('data_sources.html')
+
+    ## START DATA VALIDATION ##
+    start_date = date.fromisoformat(sd)
+    end_date = date.fromisoformat(ed)
+
+    if (start_date > end_date):
+        start_date, end_date = end_date, start_date
+
+    #DEBUG <year-month-date>
+    print(start_date)
+    print(end_date)
+    print("\n")
+
+    date_temp = (str)(end_date - start_date)
+    print((int)(temp[:(temp.find(" "))]) <= 20)
+    print("\n")
+
+    # Date range checker (to prevent a large file from being generated)
+    ## The limit is less then 3 weeks (less then 21 days) because if it is any higher,
+    ## then the worst case senario is that a file could be over 0.5 GB in size, making
+    ## it unopenable by the user, which is the whole point of the downloader. ##
+    if ((int)(temp[:(temp.find(" "))]) <= 20):
+        flash("Date range is too large: must be less than 3 weeks (< 21 days)")
+        return redirect(url_for('data_sources'))
+    
+    if (method == "LL"):
+        min_Lat = MIN_LAT if (min_Lat == "") else min_Lat
+        max_Lat = MAX_LAT if (max_Lat == "") else max_Lat
+        min_Lon = MIN_LON if (min_Lon == "") else min_Lon
+        max_Lon = MAX_LON if (max_Lon == "") else max_Lon
+    else: # method == "county"
+        min_Lat = MIN_LAT if (county == -1) else min_Lat #lat[county]
+        max_Lat = MAX_LAT if (county == -1) else max_Lat #lat[county+1]
+        min_Lon = MIN_LON if (county == -1) else min_Lon #lon[county]
+        max_Lon = MAX_LON if (county == -1) else max_Lon #lon[county+1]
+
+    if (min_Lat > max_Lat):
+        min_Lat, max_Lat = max_Lat, min_Lat
+    if (min_Lon > max_Lon):
+        min_Lon, max_Lon = max_Lon, min_Lon
+
+    #DEBUG
+    print(min_Lat)
+    print(max_Lat)
+    print("\n")
+    print(min_Lon)
+    print(max_Lon)
+
+    ## END DATA VALIDATION, START FILE GENERATION ##
+
+    # PLACEHOLDER FOR FILE DOWNLOADER
+    flash("WIP")
+    return redirect(url_for('data_sources')) # Removes parameters from URL
 
 @app.route('/dbtest')
 def db_test():
