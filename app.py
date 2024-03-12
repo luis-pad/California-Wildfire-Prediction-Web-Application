@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, send_file, flash
 from pymongo.mongo_client import MongoClient
 from io import BytesIO
-from datetime import date
+from datetime import date, timedelta
 
 # LIST OF STRINGS FILLED WITH CALIFORNA COUNTY NAMES
 # Format: <BLANK>,<COUNTY NAME>,...
@@ -77,8 +77,9 @@ def createFile(data):
     file_data = bytearray('\n'.join(data) , "utf-8")
     return send_file(BytesIO(file_data), download_name = "dataset.txt", as_attachment = True)
 
+## Generates the header used for the file ##
 def generateHeader(data_type):
-    header = ""
+    header = "Latitude | Longitude | "
 
     if "EVI" in data_type:
         header += "Enhanced Vegetation Index | "
@@ -94,6 +95,20 @@ def generateHeader(data_type):
         header += "Elevation | "
 
     return header[:-3]
+
+## Gets the data from the files based on the following parameters: ##
+##
+## Start_Date: The starting date
+## End_Date: The ending date
+## Header: A sting of the header of the data set
+## Area: An array containing the lat and lon in this format: (Float/Double)
+##       [min_Lat, max_Lat, min_Lon, max_Lon]
+## Data_Type: An array containing the data types the user asked for (String)
+##
+## Returns an string array with the data the user asked for from the pre-prosessed data file(s).
+def getData(Start_Date, End_Date, Header, Area, Data_Type):
+    ## TODO - IMPLEMENT
+    return
 
 ## Finds and returns a value from file 'filePath' from day 'date' and county 'county' ##
 ## Returns an empty array if it can't find a value ##
@@ -251,14 +266,15 @@ def data_sources():
 ##    print("\n")
 
     temp = (str)(end_date - start_date)
-##    print((int)(temp[:(temp.find(" "))]) > 20)
+    date_range = (int)(temp[:(temp.find(" "))])
+##    print(date_range > 20)
 ##    print("\n")
 
     # Date range checker (to prevent a large file from being generated)
     ## The limit is less then 3 weeks (less then 21 days) because if it is any higher,
     ## then the worst case senario is that a file could be over 0.5 GB in size, making
     ## it unopenable by the user, which is the whole point of the downloader. ##
-    if ((int)(temp[:(temp.find(" "))]) > 20):
+    if (date_range > 20):
         flash("Date range is too large: must be less than 3 weeks (< 21 days)")
         print("Date range = " + temp[:(temp.find(" "))])
         return redirect(url_for('data_sources'))
@@ -289,8 +305,14 @@ def data_sources():
     ## END DATA VALIDATION, START FILE GENERATION ##
 
     # Generate header
-    print(generateHeader(data_type))
+    Header = generateHeader(data_type)
+    print(Header)
+    
     # Generate date
+    for i in range(date_range + 1):
+        Date = start_date + timedelta(i)
+        print(Date)
+        
     # Find values in lat and log and get the data type the user requested
     # Flaten the array at the end of the
 
