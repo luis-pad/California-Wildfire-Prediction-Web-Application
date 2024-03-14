@@ -326,3 +326,16 @@ footer {
   font-style: italic;
   margin-bottom: 10px;
 }
+
+.nav-link {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-link.active {
+  font-weight: bold;
+  /* border-bottom-color: #fa6400; */
+  border-bottom: 2px solid #fa6400;
+  
+  /* border-width: 10px; */
+}

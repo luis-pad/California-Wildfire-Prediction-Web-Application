@@ -15,9 +15,9 @@
       <div class="nav" id="navbar">
         <div class="logo"><img src="{{url_for('static', filename='fire_logo.jpg')}}" alt="" /></div>
         <ul class="nav-list">
-            <li><a href="{{url_for('home')}}">Home</a></li>
-            <li><a href="{{url_for('data_sources')}}">Data Sources</a></li>
-            <li><a href="{{url_for('models')}}">Machine Learning</a></li>
+          <li><a class="nav-link active" href="{{url_for('home')}}">Home</a></li>
+          <li><a class="nav-link " href="{{url_for('data_sources')}}">Data Sources</a></li>
+          <li><a class="nav-link " href="{{url_for('models')}}">Machine Learning</a></li>
             <!-- <li><a href="{{url_for('home')}}">Forum</a></li> -->
         </ul>
     </div>
