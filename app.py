@@ -65,20 +65,26 @@ CountyList = ["","Alameda",
               "","Yuba"
               ]
 
+MIN_LON = 32.500
+MIN_LAT = -124.200
+MAX_LON = 42.000
+MAX_LAT = -114.000
 
-## PLACEHOLDERS (Check with the dataset to find the actual values)
-MIN_LON = "0"
-MIN_LAT = "0"
-MAX_LON = "200"
-MAX_LAT = "200"
+## REPLACE THIS WITH THE ACTUAL FILE PATH TO THE PRE-PROCESSED DATA ON THE SERVER
+file_path = "data/"
 
 ## Generates the file to download ##
-def createFile(data):
+def createFile(data, file):
     file_data = bytearray('\n'.join(data) , "utf-8")
-    return send_file(BytesIO(file_data), download_name = "dataset.txt", as_attachment = True)
+    return send_file(BytesIO(file_data), download_name = f"dataset.{file}", as_attachment = True)
+
+## Converts a number sting into one with 3 decimal points ##
+def formatValue(value):
+    return round(float(value),3)
 
 ## Generates the header used for the file ##
-def generateHeader(data_type):
+def generateHeader(data_type, file_type):
+
     header = "Latitude | Longitude | "
 
     if "EVI" in data_type:
@@ -94,58 +100,114 @@ def generateHeader(data_type):
     if "Elevation" in data_type:
         header += "Elevation | "
 
-    return header[:-3]
+    if (file_type == "txt"):
+        return header[:-3]
+
+    header = "Date," + header
+    header = header.replace(" | ",",")
+    header = header.replace("Enhanced Vegetation Index","EVI")
+    header = header.replace("Themal Anomalies","TA")
+    header = header.replace("Land Surface Temperature","LST")
+    header = header.replace("Fire?","Fire")
+    return header[:-1]
 
 ## Gets the data from the files based on the following parameters: ##
 ##
 ## Start_Date: The starting date
 ## End_Date: The ending date
-## Header: A sting of the header of the data set
+## Header: A sting contatining the header of the data set
 ## Area: An array containing the lat and lon in this format: (Float/Double)
 ##       [min_Lat, max_Lat, min_Lon, max_Lon]
 ## Data_Type: An array containing the data types the user asked for (String)
+## File_Type: A sting containg the file type the user asked for
 ##
 ## Returns an string array with the data the user asked for from the pre-prosessed data file(s).
-def getData(Start_Date, End_Date, Header, Area, Data_Type):
-    ## TODO - IMPLEMENT
-    return
+def getData(Start_Date, End_Date, Header, Area, Data_Type, File_Type):
 
-## Finds and returns a value from file 'filePath' from day 'date' and county 'county' ##
-## Returns an empty array if it can't find a value ##
-def findValue(start_date, end_date, county, filePath):
-    file = open(filePath, 'r')
+    ## Open the starting file
+    file = open(file_path + str(Start_Date.year) + "data_Elevation.csv", 'r')
     line = file.readline()
     line = file.readline() # Skip Header
-    matches = []
 
-    if (end_date == ""): # Only Start Date
-        end_date = start_date
+    Cur_Date = Start_Date
+    return_list = []
 
-    while (line != ''):
-        line_check = [str(x) for x in line.split(",")]
-        if ((start_date <= date.fromisoformat(toISO(line_check[0])) <= end_date)
-        and (county in line)):
-            matches.append(line_check)
-        line = file.readline()
-
-    file.close()
-
-    if matches == []:
-        return []
-
-    for i in matches:
-        i[0] = date.fromisoformat(toISO(i[0]))
-        
-    ret_list = []
-    for i in matches:
-        # <County>  |  <Date>  |  <Value>
-        ap_str = i[3][:-1] + "  |  " + str(i[0]) + "  |  " + i[1]
-        ret_list.append(ap_str)
-
-    ret_list.sort()
-    ret_list.append("")
+    if (File_Type == "txt"):
+        return_list.append(str(Cur_Date))
     
-    return ret_list
+    return_list.append(Header)
+    #input(Cur_Date)
+
+    # TODO - Test this thing, see if it outputs the corect values
+    # TODO - Split the source .csv files into days for more efficient performance.
+    # TODO - Add an outer loop to switch files.
+    while (Cur_Date <= End_Date) and (line != ''):
+        line_check = [str(x) for x in line.split(",")]
+
+        # Base line input
+        if (File_Type == "txt"):
+            line = f"{line_check[1]} | {line_check[2]} | "
+        else:
+            line = f"{line_check[0]},{line_check[1]},{line_check[2]},"
+
+        # Updates the Cur_Date
+        if (line_check[0] > str(Cur_Date)):
+            Cur_Date += timedelta(days=1)
+
+            if (Cur_Date > End_Date):
+                break
+
+            # Adds the next day for the .txt files
+            if (File_Type == "txt"):
+                return_list.append("")
+                return_list.append(str(Cur_Date))
+                return_list.append(Header)
+                #input(Cur_Date)
+
+        # Skips the line if the date on the file is less than the Cur_Date
+        if (line_check[0] < str(Cur_Date)):
+            line = file.readline()
+            continue
+
+        # Check the lat
+        if (formatValue(line_check[1]) < Area[0]) or (formatValue(line_check[1]) > Area[1]):
+            line = file.readline()
+            continue
+
+        # Check the lon
+        if (formatValue(line_check[2]) < Area[2]) or (formatValue(line_check[2]) > Area[3]):
+            line = file.readline()
+            continue
+        
+        
+        # Gets the needed data from the source .csv files
+        if "EVI" in Data_Type:
+            line += f"{line_check[3]}{" | " if File_Type == "txt" else ","}"
+        if "TA" in Data_Type:
+            line += f"{line_check[4]}{" | " if File_Type == "txt" else ","}"
+        if "LST" in Data_Type:
+            line += f"{line_check[5]}{" | " if File_Type == "txt" else ","}"
+        if "Wind" in Data_Type:
+            line += f"{line_check[6]}{" | " if File_Type == "txt" else ","}"
+        if "Fire" in Data_Type:
+            if File_Type == "txt":
+                line += f"{"Yes" if bool(int(line_check[7])) else "No"} | "
+            else:
+                line += f"{line_check[7]},"
+        if "Elevation" in Data_Type:
+            line += f"{line_check[8]}{" | " if File_Type == "txt" else ","}"
+
+        # Formats and adds the value to the return list.
+        # (Removes last " | " or "," and '\n' at the end of the string)
+        line = line[:-4] if File_Type == "txt" else line[:-2]
+        #input(line)
+        return_list.append(line)
+
+        # Next line for next loop
+        line = file.readline()
+    
+    file.close()
+    return return_list
 
 ## Converts the county id into a string ##
 def formatCounty(county):
@@ -178,54 +240,6 @@ def home():
 def about():
     return render_template('about.html')
 
-## STILL NEED THIS FOR REFERENCE, WILL REMOVE WHEN FILE DOWNLOADER IS DONE.
-"""
-@app.route('/data')
-def data():
-    sd = request.args.get('start_date', default = "", type = str)
-    ed = request.args.get('end_date', default = "", type = str)
-    county = request.args.getlist('county', type = int)
-    print(sd)       # DEBUG
-    print(ed)       # DEBUG
-    print(county)   # DEBUG
-
-    if (len(county) == 0 or sd == ""): # NO DATA ENTERED
-        return render_template('data.html')
-    
-    try:
-        start_date = date.fromisoformat(sd)
-        end_date = date.fromisoformat(ed) if (not ed == "") else ""
-    except: ## INVALID DATE ENTRY
-        print("Invalid date entry!")
-        flash("ERROR: Invalid date entry!")
-        return redirect(url_for('data'))
-
-    if (start_date > end_date):
-        print("End date is larger than start date")
-        flash("ERROR: End date is larger than start date")
-        return redirect(url_for('data'))
-
-    print(start_date)     # DEBUG date : <year>-<month>-<day>
-    print(end_date)
-    
-    value_NDVI = []
-    value_NDVI.append(["<County>  |  <Date>  |  <NDVI>", ""])
-        
-    for i in county:
-        find_county = formatCounty(i)
-        print(find_county)                  # DEBUG
-
-        value_NDVI.append(
-            findValue(start_date, end_date, find_county, "Data Processing/output/NDVI_result.csv")
-        )
-
-    value_NDVI = sum(value_NDVI, []) # Flatens the list
-    
-    for i in value_NDVI: # DEBUG, OUTPUT
-        print(i)
-    
-    return createFile(value_NDVI)"""
-
 @app.route('/models')
 def models():
     return render_template('models.html')
@@ -248,9 +262,11 @@ def data_sources():
 
     data_type = request.args.getlist('type', type = str)
 
+    file_type = request.args.get('filetype', default = "", type = str)
+
     ## IF ANY OF THE REQUIRED FIELDS ARE THE DEFAULT VALUES, JUST LOAD THE PAGE ##
     ## (Unless you clicked on the "Download Dataset" button, this should always be true) ##
-    if (sd == "" or ed == "" or method == "" or len(data_type) == 0):
+    if (sd == "" or ed == "" or method == "" or len(data_type) == 0 or file_type == ""):
         return render_template('data_sources.html')
 
     ## START DATA VALIDATION ##
@@ -280,10 +296,21 @@ def data_sources():
         return redirect(url_for('data_sources'))
     
     if (method == "LL"):
-        min_Lat = MIN_LAT if (min_Lat == "") else min_Lat
-        max_Lat = MAX_LAT if (max_Lat == "") else max_Lat
-        min_Lon = MIN_LON if (min_Lon == "") else min_Lon
-        max_Lon = MAX_LON if (max_Lon == "") else max_Lon
+
+        # Input Validation for Latitude and Lonitude inputs
+        try:
+            if (min_Lat != ""): float(min_Lat)
+            if (max_Lat != ""): float(max_Lat)
+            if (min_Lon != ""): float(min_Lon)
+            if (max_Lon != ""): float(min_Lon)
+        except:
+            flash("Invalid Laititude or Lottitute value entered: Please enter a number (decimal or whole) or leave blank.")
+            return redirect(url_for('data_sources'))
+        
+        min_Lat = MIN_LAT if (min_Lat == "") else formatValue(min_Lat)
+        max_Lat = MAX_LAT if (max_Lat == "") else formatValue(max_Lat)
+        min_Lon = MIN_LON if (min_Lon == "") else formatValue(min_Lon)
+        max_Lon = MAX_LON if (max_Lon == "") else formatValue(max_Lon)
     else: # method == "county"
         min_Lat = MIN_LAT if (county == -1) else min_Lat #lat[county]
         max_Lat = MAX_LAT if (county == -1) else max_Lat #lat[county+1]
@@ -302,10 +329,12 @@ def data_sources():
 ##    print(min_Lon)
 ##    print(max_Lon)
 
+##    print(file_type)
+
     ## END DATA VALIDATION, START FILE GENERATION ##
 
     # Generate header
-    Header = generateHeader(data_type)
+    Header = generateHeader(data_type, file_type)
     print(Header)
     
     # Generate date
@@ -314,11 +343,20 @@ def data_sources():
         print(Date)
         
     # Find values in lat and log and get the data type the user requested
-    # Flaten the array at the end of the
+    values = getData(start_date, end_date, Header,
+                     [min_Lat, max_Lat, min_Lon, max_Lon],
+                     data_type, file_type)
+
+    
+    # Flaten the array at the end of the file reader
+
 
     # PLACEHOLDER FOR FILE DOWNLOADER
-    flash("WIP")
-    return redirect(url_for('data_sources')) # Removes parameters from URL
+    
+    #flash("WIP")
+    #return redirect(url_for('data_sources')) # Removes parameters from URL
+
+    return createFile(values, file_type)
 
 @app.route('/dbtest')
 def db_test():

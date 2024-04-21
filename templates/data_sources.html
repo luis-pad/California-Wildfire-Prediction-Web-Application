@@ -66,7 +66,6 @@
 
             <script>
                 function showDiv(element) {
-                    console.log(element);
                     document.getElementById("LL").style.display = "none";
                     document.getElementById("county_select").style.display = "none";
 
@@ -164,6 +163,15 @@
                     <option value="Fire">Fire</option>
                     <option value="Elevation">Elevation</option>
                 </select>
+            </div>
+
+            <div id="file">
+                <label for="file">File Type:</label>
+                <input type="radio" id="txt" name="filetype" value="txt" required>
+                <label for="txt"> .txt </label>
+                <input type="radio" id="csv" name="filetype" value="csv">
+                <label for="csv"> .csv </label>
+
             </div>
 
             <input type="submit" class="button-5" value="Download Dataset">
