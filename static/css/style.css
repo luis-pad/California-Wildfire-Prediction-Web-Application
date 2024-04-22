@@ -139,8 +139,11 @@ li {
     height: 80px;
     margin-left: 20px;
   }
-}
 
+  .column3,.column1,.column2{
+    width: 100%; /* Set width to 100% when screen size is smaller */
+  }
+}
 
 main {
   flex-grow: 1;
@@ -300,11 +303,20 @@ h4{
   border:solid #ED9457 5px;
   
 }
+.column1 img {
+  max-width: 100%;
+}
 .column2{
   width: 50%; /* Adjust width as needed */
   text-align:center;
   background-color: #ED9457;
   font-size: min(25px, 6vw);
+}
+.column3 {
+  width: 75%; /* Adjust width as needed */
+  margin: 0 auto; /* This centers the column horizontally */
+  text-align: center;
+  border: solid #ED9457 5px;
 }
 ul{
   list-style-type: none;
