@@ -12,10 +12,10 @@
     <div class="nav" id="navbar">
         <div class="logo"><img src="{{url_for('static', filename='fire_logo.jpg')}}" alt="" /></div>
         <ul class="nav-list">
-            <li><a href="{{url_for('home')}}">Home</a></li>
-            <li><a href="{{url_for('data_sources')}}">Data Sources</a></li>
-            <li><a href="{{url_for('models')}}">Machine Learning</a></li>
-            <li><a href="{{url_for('home')}}">Forum</a></li>
+            <li><a class="nav-link " href="{{url_for('home')}}">Home</a></li>
+            <li><a class="nav-link active" href="{{url_for('data_sources')}}">Data Sources</a></li>
+            <li><a class="nav-link " href="{{url_for('models')}}">Machine Learning</a></li>
+            <!-- <li><a href="{{url_for('home')}}">Forum</a></li> -->
         </ul>
     </div>
     <div class="progress-container">
@@ -173,6 +173,10 @@
         <img src="{{url_for('static', filename='data_source_image.jpg')}}" alt="Data Image" />
 
         <br />
+        <video width="800" loop autoplay controls>
+            <source src="{{url_for('static', filename='0000-0490.mp4')}}" type="video/mp4">
+            
+        </video>
         <p id="burn_area">
             Data is crucial for machine learning as it serves as the foundation for
             training and improving AI models. The quality and quantity of data
