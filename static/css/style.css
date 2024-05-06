@@ -60,11 +60,38 @@ li {
   height: 40px;
 }
 .wildfire-img {
-  height:1000px;
+  height:1200px;
   max-width: 100%;
   padding-bottom: 150px;
   background: rgb(208,80,80);
   background: radial-gradient(circle, rgba(208,80,80,1) 0%, rgba(237,140,49,1) 51%, rgba(236,84,8,0.7147233893557423) 84%);
+  background-image: url('{{url_for('static', filename='wildfi.png')}}');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.video-container {
+  position: relative;
+  display: inline-block;
+  width: calc(33.33% - 20px); /* Adjust width as needed */
+  margin: 10px;
+  padding-top:100px ;
+}
+
+.video-container video {
+  max-width: 80%;
+  height: auto;
+  padding-top: 50px;
+}
+
+.video-container h4 {
+  position: absolute;
+  text-align: center;
+  top: 80px;
+  left:60px;
+  color: white;
+  margin: 0;
+  padding: 0;
 }
 
 .logo-mobile img {
@@ -207,6 +234,15 @@ h4{
   font-size: min(7vw,40px);
   padding-top: 50px;
   color: white;
+}
+h5 {
+  text-align: center;
+  padding: 15px;
+  color: #EF2929 ;
+  width: fit-content;
+  margin: auto;
+  font-size:40px;
+  
 }
 #intro {
   text-align: center;
