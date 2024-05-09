@@ -1,7 +1,21 @@
 from flask import Flask, render_template, redirect, url_for, request, send_file, flash
-from pymongo.mongo_client import MongoClient
+# from pymongo.mongo_client import MongoClient
 from io import BytesIO
 from datetime import date, timedelta
+
+import mysql.connector
+
+
+
+# Connect to MySQL database
+# mydb = mysql.connector.connect(
+#     host="localhost", #Different if hosting online
+#     user="root", #Specify user typically root
+#     password="", #Password for user
+#     database="" #Name of database
+# )
+
+# mycursor = mydb.cursor()
 
 # LIST OF STRINGS FILLED WITH CALIFORNA COUNTY NAMES
 # Format: <BLANK>,<COUNTY NAME>,...
@@ -162,9 +176,9 @@ def toISO(date):
 app = Flask(__name__)
 app.secret_key = b'z19D]p3Q4]rjhx[qcBHSf-Rx@K@9W*' # Needed for flash()
 
-client = MongoClient('localhost', 27017)
-db = client["cwp_prod"]
-coll = db.main
+# client = MongoClient('localhost', 27017)
+# db = client["cwp_prod"]
+# coll = db.main
 
 @app.route('/')
 def index():
@@ -320,14 +334,55 @@ def data_sources():
     flash("WIP")
     return redirect(url_for('data_sources')) # Removes parameters from URL
 
-@app.route('/dbtest')
-def db_test():
-
-    year_param = request.args.get('year')
-
-    # 1
-    _1 = coll.find({"year": int(year_param)}, {"_id": 0})
-    return(list(_1))
+#THE FOLLOWING CODE IS COMMENTED FOR EASE OF USE TO TEAM. UNCOMMENT TO WORK WITH DATABASE
+# @app.route('/retrieval/<int:year>')   #Retrieves the appropriate year from the page link
+# def test(year):
+#     return MySQL(year)
+# @app.route('/MySQL/')
+# def MySQL(year):
+#     print(year)
+    
+#     if year == 2022:
+#         mycursor.execute("SELECT * FROM new_table LIMIT 30")
+#         data = mycursor.fetchall()
+#         return render_template('table.html', data=data, year=year )
+#     elif year == 2021:
+#         mycursor.execute("SELECT * FROM 2021_data LIMIT 30")
+#         data = mycursor.fetchall()
+#         return render_template('table.html', data=data, year=year )
+#     elif year == 2020:
+#         mycursor.execute("SELECT * FROM 2020_data LIMIT 30")
+#         data = mycursor.fetchall()
+#         return render_template('table.html', data=data, year=year )
+#     elif year == 2019:
+#         mycursor.execute("SELECT * FROM 2019_data LIMIT 30")
+#         data = mycursor.fetchall()
+#         return render_template('table.html', data=data, year=year )
+#     elif year == 2018:
+#         mycursor.execute("SELECT * FROM 2018_data LIMIT 30")
+#         data = mycursor.fetchall()
+#         return render_template('table.html', data=data, year=year )
+#     elif year == 2017:
+#         mycursor.execute("SELECT * FROM 2017_data LIMIT 30")
+#         data = mycursor.fetchall()
+#         return render_template('table.html', data=data, year=year )
+#     elif year == 2016:
+#         mycursor.execute("SELECT * FROM 2016_data LIMIT 30")
+#         data = mycursor.fetchall()
+#         return render_template('table.html', data=data, year=year ) 
+#     elif year == 2015:
+#         mycursor.execute("SELECT * FROM 2015_data LIMIT 30")
+#         data = mycursor.fetchall()
+#         return render_template('table.html', data=data, year=year )
+#     elif year == 2014:
+#         mycursor.execute("SELECT * FROM 2014_data LIMIT 30")
+#         data = mycursor.fetchall()
+#         return render_template('table.html', data=data, year=year )
+#     elif year == 2013:
+#         mycursor.execute("SELECT * FROM 2013_data LIMIT 30")
+#         data = mycursor.fetchall()
+#         return render_template('table.html', data=data, year=year )
+#     return render_template('table.html', data=data)
 
 if __name__ == "__main__":
     app.run()
